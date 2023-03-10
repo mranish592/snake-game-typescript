@@ -6,9 +6,40 @@
   padding: 2rem;
 }
 
-#canvas {
+/* #canvas {
   display: block;
   margin: 2rem auto;
   width: 540px;
   height: 540px;
+} */
+
+.body {
+  background-color: #ececec;
+  min-height: 100vh;
+  min-width: 100vh;
+  display: grid;
+  justify-content: space-evenly;
 }
+
+.board {
+  background-color: #1a1a1a;
+  height: 90vh;
+  width: 90vh;
+  align-self: center;
+  display: grid;
+  grid-template-rows: repeat(24, 1fr);
+  justify-content: space-evenly;
+}
+
+.row-cell {
+  background-color: #1a1a1a;
+  width: 90vh;
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  justify-content: space-evenly;
+}
+
+/* .cell {
+
+} */
+
