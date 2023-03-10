@@ -9,3 +9,6 @@ confetti.create(document.getElementById('canvas') as HTMLCanvasElement, {
   resize: true,
   useWorker: true,
 })({ particleCount: 200, spread: 200 });
+
+let my_canvas = document.getElementById('canvas') as HTMLCanvasElement
+console.log(my_canvas.width)
