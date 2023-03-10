@@ -13,6 +13,7 @@ Completed using CSS Grid and TS
 Completed, using random functions, and accessing grid
 
 ## move snake head periodically
+Completed
 
 ## control snake head with arrow keys
 

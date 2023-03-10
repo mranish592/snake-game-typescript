@@ -19,6 +19,11 @@
   min-width: 100vh;
   display: grid;
   justify-content: space-evenly;
+  grid-template-columns: 1fr 10fr 1fr;
+}
+
+.column-box {
+  background-color: #ececec;
 }
 
 .board {
@@ -39,6 +44,9 @@
   justify-content: space-evenly;
 }
 
+.button {
+  
+}
 /* .cell {
 
 } */
