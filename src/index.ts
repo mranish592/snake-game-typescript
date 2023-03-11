@@ -12,12 +12,36 @@ confetti.create(document.getElementById('canvas') as HTMLCanvasElement, {
 
 const NUMBER_OF_CELLS = 24
 
-let board = document.getElementById('board')
+let board = document.getElementById('board') as HTMLElement
 if(board != null) initialiseBoard(board)
 
 let currentSnakePosition = setSnakeHead()
-document.getElementById("start")?.addEventListener("click", move)
+let directionVector: number[] = [0,1]
 
+document.getElementById("start")?.addEventListener("click", move)
+document.addEventListener("keydown", function(event){
+  console.log(event.code)
+  changeDirection(event.code)
+})
+
+function changeDirection(code: string){
+  switch(code){
+    case "ArrowUp": {
+      console.log("direction should be up")
+      directionVector = [-1,0]
+      break
+    }
+    case "ArrowDown": {
+      console.log("direction should be down")
+      directionVector = [1,0]
+      break
+    }
+    case "ArrowRight": directionVector = [0,1]; break;
+    case "ArrowLeft": directionVector = [0,-1]; break; 
+    default: break;
+  }
+  console.log(directionVector)
+}
 
 function initialiseBoard(board: HTMLElement){
   console.log("BOARD INITIALISING...")
@@ -78,8 +102,9 @@ function move() {
       let coord = getId(elem!!.id)
       let x = Number(coord[0])
       let y = Number(coord[1])
-      let x_new:number = (x+1) % NUMBER_OF_CELLS
-      let y_new:number = (y+1) % NUMBER_OF_CELLS
+      let x_new:number = (x+directionVector[0]+NUMBER_OF_CELLS) % NUMBER_OF_CELLS
+      let y_new:number = (y+directionVector[1]+NUMBER_OF_CELLS) % NUMBER_OF_CELLS
+      console.log(x, y, x_new, y_new)
       
       elem.style.backgroundColor = "#1a1a1a"
       currentSnakePosition = setId(x_new, y_new)
