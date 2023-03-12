@@ -81,12 +81,18 @@ function getId(id: string): number[]{
 }
 
 function setFoodPosition(){
-  let foodRow = Math.floor(Math.random()*(NUMBER_OF_CELLS))
-  let foodColumn = Math.floor(Math.random()*(NUMBER_OF_CELLS))
-  let foodCell = document.getElementById(setId(foodRow, foodColumn).toString())
+  let foodId: number
+  do{
+    let foodRow = Math.floor(Math.random()*(NUMBER_OF_CELLS))
+    let foodColumn = Math.floor(Math.random()*(NUMBER_OF_CELLS))
+    foodId = setId(foodRow, foodColumn)
+  } 
+  while(snakeBodyCells.includes(foodId))
+
+  let foodCell = document.getElementById(foodId.toString())
   if(foodCell != null) foodCell.style.backgroundColor = "red"
-  currentFoodPosition = setId(foodRow, foodColumn)
-  return setId(foodRow, foodColumn)
+  currentFoodPosition = foodId
+  return foodId
 }
 
 
