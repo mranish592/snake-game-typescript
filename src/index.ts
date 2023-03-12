@@ -81,12 +81,18 @@ function getId(id: string): number[]{
 }
 
 function setFoodPosition(){
-  let foodRow = Math.floor(Math.random()*(NUMBER_OF_CELLS))
-  let foodColumn = Math.floor(Math.random()*(NUMBER_OF_CELLS))
-  let foodCell = document.getElementById(setId(foodRow, foodColumn).toString())
+  let foodId: number
+  do{
+    let foodRow = Math.floor(Math.random()*(NUMBER_OF_CELLS))
+    let foodColumn = Math.floor(Math.random()*(NUMBER_OF_CELLS))
+    foodId = setId(foodRow, foodColumn)
+  } 
+  while(snakeBodyCells.includes(foodId))
+
+  let foodCell = document.getElementById(foodId.toString())
   if(foodCell != null) foodCell.style.backgroundColor = "red"
-  currentFoodPosition = setId(foodRow, foodColumn)
-  return setId(foodRow, foodColumn)
+  currentFoodPosition = foodId
+  return foodId
 }
 
 
@@ -129,9 +135,12 @@ function move() {
       let x_new:number = (x+directionVector[0]+NUMBER_OF_CELLS) % NUMBER_OF_CELLS
       let y_new:number = (y+directionVector[1]+NUMBER_OF_CELLS) % NUMBER_OF_CELLS
       
-      elem.style.backgroundColor = "#1a1a1a"
+      elem.style.backgroundColor = "green"
 
       currentSnakePosition = setId(x_new, y_new)
+      if(snakeBodyCells.includes(currentSnakePosition)){
+        stopGame = true
+      }
       snakeBodyCells.push(currentSnakePosition)
       if(currentSnakePosition == currentFoodPosition){
         console.log(setFoodPosition())
@@ -139,14 +148,15 @@ function move() {
         score = score + 1
         let scoreElem = document.getElementById("score")
         if(scoreElem != null) scoreElem.innerHTML = score.toString()
+      } else {
+        let tail = snakeBodyCells.shift()
+        if(tail != null) document.getElementById(tail.toString())!!.style.backgroundColor = "#1a1a1a"
       }
       
-
-
       let newElement = document.getElementById(currentSnakePosition?.toString())
       if(newElement == null)
         return
-      newElement.style.backgroundColor = "green"
+      newElement.style.backgroundColor = "#37f830"
     
       // elem.style.top = pos + 'px';
       // elem.style.left = pos + 'px';
