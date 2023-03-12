@@ -19,7 +19,7 @@
   min-width: 100vh;
   display: grid;
   justify-content: space-evenly;
-  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-columns: 1fr 10fr 4fr;
 }
 
 .column-box {
@@ -43,11 +43,4 @@
   grid-template-columns: repeat(24, 1fr);
   justify-content: space-evenly;
 }
-
-.button {
-  
-}
-/* .cell {
-
-} */
 

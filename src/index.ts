@@ -14,28 +14,37 @@ const NUMBER_OF_CELLS = 24
 
 let board = document.getElementById('board') as HTMLElement
 if(board != null) initialiseBoard(board)
+let reset = true
 
 
 let score = 0
-let speed = 1
-let currentSnakePosition = setSnakeHead()
+let scoreElem = document.getElementById("score")
+if(scoreElem != null) scoreElem.innerHTML = score.toString()
+
+let currentSnakePosition:number = 0
+setSnakeHead()
 let snakeBodyCells = [currentSnakePosition]
 
-let currentFoodPosition = Math.floor(Math.random()*(NUMBER_OF_CELLS)*NUMBER_OF_CELLS)
+let currentFoodPosition:number 
 setFoodPosition()
 let directionVector: number[] = [0,1]
 let stopGame = true
 
-document.getElementById("start")?.addEventListener("click", move)
+document.getElementById("start")?.addEventListener("click",function(event){
+  if(reset)
+    resetBoard()
+  start()
+})
 document.addEventListener("keydown", function(event){
-  console.log(event.code)
   changeDirection(event.code)
 })
 
-document.getElementById("stop")?.addEventListener("click", function(event){
+document.getElementById("pause")?.addEventListener("click", function(event){
   stopGame = true
   console.log(stopGame)
 })
+
+document.getElementById("reset")?.addEventListener("click", resetBoard)
 
 function changeDirection(code: string){
   switch(code){
@@ -54,6 +63,25 @@ function changeDirection(code: string){
     default: break;
   }
   console.log(directionVector)
+}
+
+function resetBoard(){
+  console.log("BOARD RESETTING...")
+  for (let i = 0; i < NUMBER_OF_CELLS; i++) {
+    for (let j = 0; j < NUMBER_OF_CELLS; j++) {
+      let elem = document.getElementById(setId(i, j).toString())
+      if(elem != null) elem.style.backgroundColor = "#1a1a1a"
+    }
+  }
+  setSnakeHead()
+  snakeBodyCells = [currentSnakePosition]
+  setFoodPosition()
+  score = 0
+  let scoreElem = document.getElementById("score")
+  if(scoreElem != null) scoreElem.innerHTML = score.toString()
+
+  stopGame = true
+  console.log("BOARD RESET!")
 }
 
 function initialiseBoard(board: HTMLElement){
@@ -102,13 +130,18 @@ function setSnakeHead() {
   console.log(setId(snakeStartRow, snakeStartCol))
   let startCell = document.getElementById(setId(snakeStartRow, snakeStartCol).toString())
   if(startCell != null) startCell.style.background = "green"
-  return setId(snakeStartRow, snakeStartCol)
+  currentSnakePosition = setId(snakeStartRow, snakeStartCol)
+
 }
 
-function move() {
-  console.log("hello")
+function start() {
+  console.log("Starting Game...")
   stopGame = false
-  score = 0
+  reset = false
+
+  let scoreElem = document.getElementById("score")
+  if(scoreElem != null) scoreElem.innerHTML = score.toString()
+
   if(currentSnakePosition == null)
     return
 
@@ -140,11 +173,14 @@ function move() {
       currentSnakePosition = setId(x_new, y_new)
       if(snakeBodyCells.includes(currentSnakePosition)){
         stopGame = true
+        score = 0
+        reset = true
+        let gameStatusElem = document.getElementById("game-status")
+        if(gameStatusElem != null) gameStatusElem.innerHTML = "GAME OVER!! \nPress \"Start\" to start over"
       }
       snakeBodyCells.push(currentSnakePosition)
       if(currentSnakePosition == currentFoodPosition){
         console.log(setFoodPosition())
-        speed = speed + 1
         score = score + 1
         let scoreElem = document.getElementById("score")
         if(scoreElem != null) scoreElem.innerHTML = score.toString()
