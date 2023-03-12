@@ -16,10 +16,13 @@ Completed, using random functions, and accessing grid
 Completed
 
 ## control snake head with arrow keys
+Completed
 
 ## create food randomly
+completed
 
 ## detect when it reaches food
+completed
 
 ## add snake tail
 
